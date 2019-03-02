@@ -2,3 +2,8 @@
 #include <cassert>
 void test0();
 void test0DimVect();
+void test1();
+void test2();
+void test3();
+void test4();
+void test5();

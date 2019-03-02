@@ -1,11 +1,11 @@
 #include "vector.h"
 unsigned int Vector::total;
 Vector::Vector(const unsigned int &d) : DIMENSION(d){
+	++total;
 	if(DIMENSION){
 		data = new double[DIMENSION];
 		for(unsigned int i = 0; i < DIMENSION; ++i)
 			data[i] = 0.0;
-		++total;
 	}
 	else{
 		std::cout << "Vector dimension must be positive.\n";
@@ -35,13 +35,18 @@ bool Vector::isSameDimension(const Vector &second) const {
 void Vector::incompatibleError() const {
 	std::cout << "Both vectors in the operation must be of same dimension.\n";
 }
+int Vector::getTotal(){
+	return total;
+}
 Vector& Vector::operator=(const Vector &second){
+	std::cout << *this << second << std::endl;
 	if(isSameDimension(second)){
 		for(unsigned int i = 0; i < DIMENSION; ++i)
 			data[i] = second.getNthValue(i);
 	}
 	else
 		incompatibleError();
+	std::cout << *this << second << std::endl;
 	return *this;
 }
 Vector& Vector::operator>>(Vector &second) const {

@@ -12,6 +12,7 @@ class Vector{
 		unsigned int getDimension() const;
 		bool isSameDimension(const Vector &second) const;
 		void incompatibleError() const;
+		static int getTotal();
 		Vector& operator=(const Vector &second);
 		Vector& operator>>(Vector &second) const;
 		friend Vector operator+(Vector first, const Vector &second);
