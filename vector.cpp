@@ -23,7 +23,8 @@ double Vector::getNthValue(const unsigned int &n) const {
 void Vector::setNthValue(const unsigned int &n, const double &newValue){
 	if(n < DIMENSION)
 		data[n] = newValue;
-	outOfBoundsError();
+	else
+		outOfBoundsError();
 }
 unsigned int Vector::getDimension() const {
 	return DIMENSION;
