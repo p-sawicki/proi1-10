@@ -11,7 +11,7 @@ Vector::Vector(const unsigned int &d) : DIMENSION(D){
 		this.~Vector();
 	}
 }
-void outOfBoundsError const (){
+void Vector::outOfBoundsError const (){
 	std::cout << "Number must be between 0 and " << DIMENSION - 1 << std::endl;
 }
 double Vector::getNthValue const (const unsigned int &n){
