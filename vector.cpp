@@ -1,5 +1,6 @@
-#include 'vector.h'
-Vector::Vector(const unsigned int &d) : DIMENSION(D){
+#include "vector.h"
+unsigned int Vector::total;
+Vector::Vector(const unsigned int &d) : DIMENSION(d){
 	if(DIMENSION){
 		data = new double[DIMENSION];
 		for(unsigned int i = 0; i < DIMENSION; ++i)
@@ -8,90 +9,92 @@ Vector::Vector(const unsigned int &d) : DIMENSION(D){
 	}
 	else{
 		std::cout << "Vector dimension must be positive.\n";
-		this.~Vector();
+		this->~Vector();
 	}
 }
-void Vector::outOfBoundsError const (){
+void Vector::outOfBoundsError() const {
 	std::cout << "Number must be between 0 and " << DIMENSION - 1 << std::endl;
 }
-double Vector::getNthValue const (const unsigned int &n){
+double Vector::getNthValue(const unsigned int &n) const {
 	if(n < DIMENSION)
 		return data[n];
-	this.outOfBoundsError();
+	outOfBoundsError();
 }
-void Vector::setNthValue (const unsigned int &n, const double &newValue){
+void Vector::setNthValue(const unsigned int &n, const double &newValue){
 	if(n < DIMENSION)
 		data[n] = newValue;
-	this.outOfBoundsError();
+	outOfBoundsError();
 }
-bool Vector::isSameDimension const (const Vector &second){
-	return this.DIMENSION == second.getDimension();
+unsigned int Vector::getDimension() const {
+	return DIMENSION;
 }
-void Vector::incompatibleError const (){
+bool Vector::isSameDimension(const Vector &second) const {
+	return (DIMENSION == second.getDimension());
+}
+void Vector::incompatibleError() const {
 	std::cout << "Both vectors in the operation must be of same dimension.\n";
 }
-Vector& Vector::operator= (const Vector &second){
-	if(this.isSameDimension(second)){
-		for(unsigned int i = 0; i < this.DIMENSION; ++i)
-			this.setNthValue(i, second.getNthValue(i));
+Vector& Vector::operator=(const Vector &second){
+	if(isSameDimension(second)){
+		for(unsigned int i = 0; i < DIMENSION; ++i)
+			data[i] = second.getNthValue(i);
 	}
 	else
-		this.incompatibleError();
-	return this;
+		incompatibleError();
+	return *this;
 }
-Vector& Vector::operator>> const (Vector &second){
-	second = this;
+Vector& Vector::operator>>(Vector &second) const {
+	second = *this;
 	return second;
 }
-Vector& Vector::operator+ const (const Vector &second){
-	if(this.isSameDimension(second)){
-		Vector result(this.DIMENSION);
-		for(unsigned int i = 0; i < this.DIMENSION; ++i)
-			result.setNthValue(i, this.getNthValue(i) + second.getNthValue(i));
-		return result;
-	}
+Vector operator+(Vector first, const Vector &second){
+	first += second;
+	return first;
+}
+Vector& Vector::operator+=(const Vector &second){
+	if(isSameDimension(second))
+		for(unsigned int i = 0; i < DIMENSION; ++i)
+			data[i] += second.getNthValue(i);
 	else
-		this.incompatibleError();
-	return this;
+		incompatibleError();
+	return *this;
 }
-Vector& Vector::operator+= (const Vector &second){
-	this = this + second;
-	return this;
-}
-Vector& Vector::operator- (){
+Vector Vector::operator-() const {
+	Vector temp(DIMENSION);
 	for(unsigned int i = 0; i < DIMENSION; ++i)
-		this.setNthValue(i, -1 * this.getNthValue(i));
-	return this;
+		temp.setNthValue(i, -1 * data[i]);
+	return temp;
 }
-Vector& Vector::operator- const (const Vector second){
-	return this + -second;
+Vector operator-(Vector first, const Vector &second){
+	first -= second;
+	return first;
 }
-Vector& Vector::operator-= (const Vector &second){
-	this = this - second;
-	return this;
+Vector& Vector::operator-=(const Vector &second){
+	*this += -second;
+	return *this;
 }
-Vector& Vector::operator* const (const Vector &second){
-	if(this.isSameDimension(second)){
-		Vector result(this.DIMENSION);
-		for(unsigned int i = 0; i < this.DIMENSION; ++i)
-			result.setNthValue(i, this.getNthValue(i) * second.getNthValue(i));
+Vector Vector::operator*(const Vector &second) const {
+	if(isSameDimension(second)){
+		Vector result(DIMENSION);
+		for(unsigned int i = 0; i < DIMENSION; ++i)
+			result.setNthValue(i, data[i] * second.getNthValue(i));
 		return result;
 	}
-	this.incompatibleError();
-	return this;
+	incompatibleError();
+	return *this;
 }
-bool Vector::operator== const (const Vector &second){
-	if(!this.isSameDimension(second))
+bool Vector::operator==(const Vector &second) const {
+	if(!isSameDimension(second))
 		return false;
-	for(unsigned int i = 0; i < this.DIMENSION; ++i)
-		if(this.getNthValue(i) != second.getNthValue(i))
+	for(unsigned int i = 0; i < DIMENSION; ++i)
+		if(data[i] != second.getNthValue(i))
 			return false;
 	return true;
 }
-bool Vector::operator!= const (const Vector &second){
-	return !(this == second);
+bool Vector::operator!=(const Vector &second) const {
+	return !(*this == second);
 }
-ostream& operator<< const (std::ostream &os, const Vector &vect){
+std::ostream& operator<<(std::ostream &os, const Vector &vect){
 	os << "[";
 	for(unsigned int i = 0; i < vect.getDimension(); ++i){
 		if(i)
