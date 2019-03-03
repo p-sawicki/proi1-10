@@ -46,10 +46,6 @@ Vector& Vector::operator=(Vector const& second){
 		incompatibleError();
 	return *this;
 }
-Vector& Vector::operator>>(Vector &second) const {
-	second = *this;
-	return second;
-}
 Vector Vector::operator+(const Vector& second) const {
 	Vector temp(DIMENSION);
 	if(isSameDimension(second))
@@ -107,6 +103,47 @@ std::ostream& operator<<(std::ostream &os, const Vector &vect){
 	}
 	os << "]";
 	return os;
+}
+void Vector::incorrectlyFormatedError(){
+	std::cout << "Input was not a correct vector. Try [";
+	char letter = 'a';
+	for(int i = 0; i < DIMENSION; ++i){
+		std::cout << letter++;
+		if(i == DIMENSION - 1)
+			std::cout << "]";
+		else
+			std::cout << ", ";
+	}
+	std::cout << std::endl;
+}
+std::istream& operator>>(std::istream &is, Vector &vect){
+	std::string input;
+	std::getline(is, input);
+	std::stringstream inputStream(input);
+	char check = 0;
+	inputStream >> check;
+	bool isCorrectlyFormated = check == '[';
+	const unsigned int dimension = vect.getDimension();
+	Vector temp(dimension);
+	for(int i = 0; i < dimension && isCorrectlyFormated; ++i){
+		double number;
+		inputStream >> number;
+		if(inputStream.fail()){
+			isCorrectlyFormated = false;
+			break;
+		}
+		temp.setNthValue(i, number);
+		inputStream >> check;
+		if(i == dimension - 1)
+			isCorrectlyFormated = check == ']';
+		else
+			isCorrectlyFormated = check == ',' || check == ';';
+	}
+	if(isCorrectlyFormated)
+		vect = temp;
+	else
+		vect.incorrectlyFormatedError();
+	return is;
 }
 Vector::~Vector(){
 	delete[] data;

@@ -1,4 +1,8 @@
+#ifndef VECTOR_H
+#define VECTOR_H
 #include <iostream>
+#include <sstream>
+#include <string>
 class Vector{
 	private:
 		static unsigned int total;
@@ -14,7 +18,6 @@ class Vector{
 		void incompatibleError() const;
 		static int getTotal();
 		Vector& operator=(const Vector& second);
-		Vector& operator>>(Vector &second) const;
 		Vector operator+(const Vector& second) const;
 		Vector& operator+=(const Vector& second);
 		Vector operator-() const;
@@ -24,5 +27,8 @@ class Vector{
 		bool operator==(const Vector &second) const;
 		bool operator!=(const Vector &second) const;
 		friend std::ostream& operator<<(std::ostream &os, const Vector &vect);	
+		void incorrectlyFormatedError();
+		friend std::istream& operator>>(std::istream &is, Vector &vect);
 		~Vector();
 };
+#endif

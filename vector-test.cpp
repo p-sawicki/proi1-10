@@ -48,13 +48,10 @@ void test2(){
 	Vector v1(D), v2(D);
 	for(unsigned int i = 0; i < D; ++i)
 		v1.setNthValue(i, 3.14 * i);
-	v1 >> v2;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v2.getNthValue(i) == v1.getNthValue(i));
-	Vector v3(D), v4(D);
-	v2 >> v3 >> v4;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v4.getNthValue(i) == v2.getNthValue(i));
+	std::cout << "Input v2 and a letter:\n";
+	char c = 0;
+	std::cin >> v2 >> c;
+	std::cout << "v2: " << v2 << ", c: " << c << std::endl;
 	std::cout << "test2 ended\n"; 
 }
 void test3(){
