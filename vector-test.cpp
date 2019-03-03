@@ -1,5 +1,4 @@
 #include "vector-test.h"
-#include "vector.h"
 void test0(){
 	std::cout << "Test0\n";
 	unsigned int d = 3;
@@ -16,6 +15,7 @@ void test0(){
 	Vector v2(d);
 	assert(Vector::getTotal() == 2);
 	assert(v1.isSameDimension(v2));
+	std::cout << "test0 ended\n";
 }
 void test0DimVect(){
 	std::cout << "Testing if error message appears correctly\n";
@@ -40,6 +40,7 @@ void test1(){
 	v5 = v4 = v2;
 	for(unsigned int i = 0; i < D; ++i)
 		assert(v5.getNthValue(i) == v2.getNthValue(i));
+	std::cout << "test1 ended \n";
 }
 void test2(){
 	std::cout << "Test2\n";
@@ -54,9 +55,41 @@ void test2(){
 	v2 >> v3 >> v4;
 	for(unsigned int i = 0; i < D; ++i)
 		assert(v4.getNthValue(i) == v2.getNthValue(i));
-	v4 = v2 + v3;
-	std::cout << v2 << v3 << v4 << std::endl;
+	std::cout << "test2 ended\n"; 
 }
 void test3(){
 	std::cout << "test3\n";
+	const unsigned int D = 3;
+	Vector v1(D), v2(D), v3(D);
+	for(unsigned int i = 0; i < D; ++i){
+		v1.setNthValue(i, i + 1);
+		v2.setNthValue(i, i * 2);
+	}
+	v3 += v1;
+	for(unsigned int i = 0; i < D; ++i)
+		assert(v3.getNthValue(i) == v1.getNthValue(i));
+	v3 = v1 + v2;
+	for(unsigned int i = 0; i < D; ++i)
+		assert(v3.getNthValue(i) == v1.getNthValue(i) + v2.getNthValue(i));
+	v3 -= v1;
+	for(unsigned int i = 0; i < D; ++i)
+		assert(v3.getNthValue(i) == v2.getNthValue(i));
+	v3 = v2 - v1;
+	for(unsigned int i = 0; i < D; ++i)
+		assert(v3.getNthValue(i) == v2.getNthValue(i) - v1.getNthValue(i));
+	std::cout << "test3 ended\n";
+}
+void test4(){
+	std::cout << "test4\n";
+	const unsigned int D = 3;
+	Vector v1(D), v2(D); 
+	for(unsigned int i = 0; i < D; ++i)
+		v1.setNthValue(i, i + 1);
+	v2 = v1;
+	double n = v2 * v1;
+	assert(n == 14.0);
+	assert(v2 == v1);
+	assert(!(v2 != v1));
+	std::cout << "v1: " << v1 << ", v2: " << v2 << std::endl;
+	std::cout << "test4 ended\n";
 }

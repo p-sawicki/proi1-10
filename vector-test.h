@@ -1,4 +1,5 @@
 #include <iostream>
+#include "vector.h"
 #include <cassert>
 void test0();
 void test0DimVect();

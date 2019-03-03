@@ -38,31 +38,29 @@ void Vector::incompatibleError() const {
 int Vector::getTotal(){
 	return total;
 }
-Vector& Vector::operator=(const Vector &second){
-	std::cout << *this << second << std::endl;
-	if(isSameDimension(second)){
+Vector& Vector::operator=(Vector const& second){
+	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
 			data[i] = second.getNthValue(i);
-	}
 	else
 		incompatibleError();
-	std::cout << *this << second << std::endl;
 	return *this;
 }
 Vector& Vector::operator>>(Vector &second) const {
 	second = *this;
 	return second;
 }
-Vector operator+(Vector first, const Vector &second){
-	first += second;
-	return first;
-}
-Vector& Vector::operator+=(const Vector &second){
+Vector Vector::operator+(const Vector& second) const {
+	Vector temp(DIMENSION);
 	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
-			data[i] += second.getNthValue(i);
+			temp.setNthValue(i, data[i] + second.getNthValue(i));
 	else
 		incompatibleError();
+	return temp;
+}
+Vector& Vector::operator+=(const Vector& second){
+	*this = *this + second;
 	return *this;
 }
 Vector Vector::operator-() const {
@@ -71,23 +69,23 @@ Vector Vector::operator-() const {
 		temp.setNthValue(i, -1 * data[i]);
 	return temp;
 }
-Vector operator-(Vector first, const Vector &second){
-	first -= second;
-	return first;
+Vector Vector::operator-(const Vector &second) const {
+	Vector temp(DIMENSION);
+	temp = *this + -second;
+	return temp;
 }
 Vector& Vector::operator-=(const Vector &second){
 	*this += -second;
 	return *this;
 }
-Vector Vector::operator*(const Vector &second) const {
-	if(isSameDimension(second)){
-		Vector result(DIMENSION);
+double Vector::operator*(const Vector &second) const {
+	double result = 0.0;
+	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
-			result.setNthValue(i, data[i] * second.getNthValue(i));
-		return result;
-	}
-	incompatibleError();
-	return *this;
+			result += data[i] * second.getNthValue(i);
+	else
+		incompatibleError();
+	return result;
 }
 bool Vector::operator==(const Vector &second) const {
 	if(!isSameDimension(second))

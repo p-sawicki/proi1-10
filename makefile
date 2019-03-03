@@ -16,3 +16,8 @@ OBJ = vector.o vector-main.o vector-test.o
 
 vector: $(OBJ)
 	$(CC) -o $@ $^ 
+
+.PHONY: clean
+
+clean:
+	rm -f *.o *~ core
