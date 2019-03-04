@@ -29,11 +29,13 @@ int main(){
 			<< "[6] - dot product of vectors\n"
 		        << "[7] - compare vectors\n"
 			<< "[8] - print vector\n"
+			<< "[9] - add vectors (using +=)\n"
+			<< "[10] - subtract vectors (using -=)\n"
 			<< "[0] - quit: "; 
 		do{
 			std::getline(std::cin, input);
 			success = getUnsignedInt(&decision, 1, input);
-			if(!success || decision > 8)
+			if(!success || decision > 10)
 				success = cantGetError();
 		} while(!success);
 		unsigned int whichVect = 0;
@@ -86,6 +88,10 @@ int main(){
 			compareVectors(v1, v2);
 		else if(decision == 8)
 			printVector(*vChosen);
+		else if(decision == 9)
+			addVectors2(v1, v2);
+		else if(decision == 10)
+			subtractVectors2(v1, v2);
 	} while(decision); 
 }
 void readValue(const Vector& vect, const unsigned int& n){
@@ -116,6 +122,19 @@ void addVectors(Vector& v1, Vector& v2, Vector& result){
 	std::cout << v1 << " + " << v2 << " = " << v1 + v2 << std::endl;
 	result = v1 + v2;
 }
+void addVectors2(Vector& v1, Vector& v2){
+	std::cout << "[1] => v1 += v2\n[2] => v2 += v1: ";
+	bool success = true;
+	std::string input;
+	unsigned int option = 0;
+	do{
+		std::getline(std::cin, input);
+		success = getUnsignedInt(&option, 1, input);
+		if(!success || !option || option > 2)
+			success = cantGetError();
+	} while(!success);
+	option == 1 ? v1 += v2 : v2 += v1;
+}
 void subtractVectors(Vector& v1, Vector& v2, Vector& result){
 	bool success = true;
 	std::string input;
@@ -135,6 +154,19 @@ void subtractVectors(Vector& v1, Vector& v2, Vector& result){
 		std::cout << v2 << " - " << v1 << " = " << v2 - v1 << std::endl;
 		result = v2 - v1;
 	}
+}
+void subtractVectors2(Vector& v1, Vector& v2){
+	std::cout << "[1] => v1 -= v2\n[2] => v2 -= v1: ";
+	bool success = true;
+	std::string input;
+	unsigned int option = 0;
+	do{
+		std::getline(std::cin, input);
+		success = getUnsignedInt(&option, 1, input);
+		if(!success || !option || option > 2)
+			success = cantGetError();
+	} while(!success);
+	option == 1 ? v1 -= v2 : v2 -= v1;
 }
 void dotProduct(const Vector& v1, const Vector& v2){
 	std::cout << v1 << " * " << v2 << " = " << v1 * v2 << std::endl;
