@@ -10,12 +10,12 @@ int main(){
 	std::string input;
 	bool success = true;
 	unsigned int dimensions[2];
+	std::cout << "Enter 2 positive whole numbers as dimensions of the vectors: ";
 	do{
-		std::cout << "Enter 2 positive whole numbers as dimensions of the vectors: ";
 		std::getline(std::cin, input);
 		success = getUnsignedInt(dimensions, 2, input);
-		if(dimensions[0] == 0 || dimensions[1] == 0)
-			success = false;
+		if(!success || dimensions[0] == 0 || dimensions[1] == 0)
+			success = cantGetError();
 	} while(!success);
 	Vector v1(dimensions[0]), v2(dimensions[1]);
 	unsigned int decision = -1;
@@ -34,8 +34,8 @@ int main(){
 		do{
 			std::getline(std::cin, input);
 			success = getUnsignedInt(&decision, 1, input);
-			if(decision > 8)
-				success = false;
+			if(!success || decision > 8)
+				success = cantGetError();
 		} while(!success);
 		unsigned int whichVect = 0;
 		if(decision == 1 || decision == 2 || decision == 3 || decision == 8){
@@ -43,8 +43,8 @@ int main(){
 			do{
 				std::getline(std::cin, input);
 				success = getUnsignedInt(&whichVect, 1, input);
-				if(whichVect > 2 || !whichVect)
-					success = false;
+				if(!success || whichVect > 2 || !whichVect)
+					success = cantGetError();
 			} while(!success);
 		}
 		Vector *vChosen = NULL;
@@ -55,8 +55,8 @@ int main(){
 			do{
 				std::getline(std::cin, input);
 				success = getUnsignedInt(&whichElement, 1, input);
-				if(whichElement >= vChosen->getDimension() || !whichElement)
-					success = false;
+				if(!success || whichElement >= vChosen->getDimension())
+					success = cantGetError();
 			} while(!success);
 		}
 		unsigned int whichToUpdate = 0;
@@ -65,8 +65,8 @@ int main(){
 			do{
 				std::getline(std::cin, input);
 				success = getUnsignedInt(&whichToUpdate, 1, input);
-				if(whichToUpdate > 2 || !whichToUpdate)
-					success = false;
+				if(!success || whichToUpdate > 2 || !whichToUpdate)
+					success = cantGetError();
 			} while(!success);
 		}
 		Vector *resultHere = NULL;
@@ -96,10 +96,12 @@ void setValue(Vector& vect, const unsigned int& n){
 	bool success = true;
 	std::string input;
 	double newValue;
+	std::cout << "Enter new value: ";
 	do{
-		std::cout << "Enter new value: ";
 		getline(std::cin, input);
 		success = getDouble(&newValue, 1, input);
+		if(!success)
+			cantGetError();
 	} while(!success);
 	vect.setNthValue(n, newValue);
 	std::cout << "Vector updated to " << vect << std::endl;
@@ -119,12 +121,12 @@ void subtractVectors(Vector& v1, Vector& v2, Vector& result){
 	bool success = true;
 	std::string input;
 	unsigned int option = 0;	
+	std::cout << "[1] => v1 - v2\n[2] => v2 - v1: ";
 	do{
-		std::cout << "[1] => v1 - v2\n[2] => v2 - v1: ";
 		std::getline(std::cin, input);
 		success = getUnsignedInt(&option, 1, input);
-		if(option > 2 || !option)
-			success = false;
+		if(!success || option > 2 || !option)
+			success = cantGetError();
 	} while(!success);
 	if(option == 1){
 		std::cout << v1 << " - " << v2 << " = " << v1 - v2 << std::endl;
@@ -140,15 +142,16 @@ void dotProduct(const Vector& v1, const Vector& v2){
 }
 void compareVectors(const Vector& v1, const Vector& v2){
 	if(v1 == v2)
-		std::cout << "Vectors are equa\n";
+		std::cout << "Vectors are equal\n";
 	else
 		std::cout << "Vectors are not equal\n";
 }
 void printVector(const Vector& vect){
 	std::cout << vect << std::endl;
 }
-void cantGetError(){
+bool cantGetError(){
 	std::cout << "An error occurred while reading data. Try again: ";
+	return false;
 }
 bool getUnsignedInt(unsigned int* data, const unsigned int& howMany, const std::string& input){
 	std::stringstream inputStream(input);
@@ -160,8 +163,6 @@ bool getUnsignedInt(unsigned int* data, const unsigned int& howMany, const std::
 			break;
 		}
 	}
-	if(!success)
-		cantGetError();
 	return success;
 }
 bool getDouble(double* data, const unsigned int& howMany, const std::string& input){
@@ -174,7 +175,5 @@ bool getDouble(double* data, const unsigned int& howMany, const std::string& inp
 			break;
 		}
 	}
-	if(!success)
-		cantGetError();
 	return success;
 }
