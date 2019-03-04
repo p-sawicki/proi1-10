@@ -30,7 +30,6 @@ int main(){
 		        << "[7] - compare vectors\n"
 			<< "[8] - print vector\n"
 			<< "[0] - quit: "; 
-		success = true;
 		do{
 			std::getline(std::cin, input);
 			success = getUnsignedInt(&decision, 1, input);

@@ -1,5 +1,5 @@
 #include "vector.h"
-Vector::Vector(const unsigned int& d) : DIMENSION(d){
+Vector::Vector(const unsigned int& d) : DIMENSION(d), inputFail(false) {
 	if(DIMENSION){
 		data = new double[DIMENSION];
 		for(unsigned int i = 0; i < DIMENSION; ++i)
@@ -28,7 +28,7 @@ unsigned int Vector::getDimension() const {
 	return DIMENSION;
 }
 bool Vector::isSameDimension(const Vector& second) const {
-	return (DIMENSION == second.getDimension());
+	return (DIMENSION == second.DIMENSION);
 }
 void Vector::incompatibleError() const {
 	std::cout << "Both vectors in the operation must be of same dimension.\n";
@@ -39,7 +39,7 @@ bool Vector::getInputFail() const {
 Vector& Vector::operator=(const Vector& second){
 	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
-			data[i] = second.getNthValue(i);
+			data[i] = second.data[i];
 	else
 		incompatibleError();
 	return *this;
@@ -48,7 +48,7 @@ Vector Vector::operator+(const Vector& second) const {
 	Vector temp(DIMENSION);
 	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
-			temp.setNthValue(i, data[i] + second.getNthValue(i));
+			temp.setNthValue(i, data[i] + second.data[i]);
 	else
 		incompatibleError();
 	return temp;
@@ -76,7 +76,7 @@ double Vector::operator*(const Vector& second) const {
 	double result = 0.0;
 	if(isSameDimension(second))
 		for(unsigned int i = 0; i < DIMENSION; ++i)
-			result += data[i] * second.getNthValue(i);
+			result += data[i] * second.data[i];
 	else
 		incompatibleError();
 	return result;
@@ -85,7 +85,7 @@ bool Vector::operator==(const Vector& second) const {
 	if(!isSameDimension(second))
 		return false;
 	for(unsigned int i = 0; i < DIMENSION; ++i)
-		if(data[i] != second.getNthValue(i))
+		if(data[i] != second.data[i])
 			return false;
 	return true;
 }
@@ -94,10 +94,10 @@ bool Vector::operator!=(const Vector& second) const {
 }
 std::ostream& operator<<(std::ostream& os, const Vector& vect){
 	os << "[";
-	for(unsigned int i = 0; i < vect.getDimension(); ++i){
+	for(unsigned int i = 0; i < vect.DIMENSION; ++i){
 		if(i)
 			os << ", ";
-		os << vect.getNthValue(i);
+		os << vect.data[i];
 	}
 	os << "]";
 	return os;
@@ -121,18 +121,17 @@ std::istream& operator>>(std::istream& is, Vector& vect){
 	char check = 0;
 	inputStream >> check;
 	vect.inputFail = check != '[';
-	const unsigned int dimension = vect.getDimension();
-	Vector temp(dimension);
-	for(int i = 0; i < dimension && !vect.inputFail; ++i){
+	Vector temp(vect.DIMENSION);
+	for(int i = 0; i < vect.DIMENSION && !vect.inputFail; ++i){
 		double number;
 		inputStream >> number;
 		if(inputStream.fail()){
 			vect.inputFail = true;
 			break;
 		}
-		temp.setNthValue(i, number);
+		temp.data[i] = number;
 		inputStream >> check;
-		if(i == dimension - 1)
+		if(i == vect.DIMENSION - 1)
 			vect.inputFail = check != ']';
 		else
 			vect.inputFail = check != ',' && check != ';';
