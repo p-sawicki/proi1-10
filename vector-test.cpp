@@ -13,14 +13,12 @@ void test0(){
 	assert(v1.getNthValue(d - 1) == 3.0);
 	assert(v1.getDimension() == d);
 	Vector v2(d);
-	assert(Vector::getTotal() == 2);
 	assert(v1.isSameDimension(v2));
 	std::cout << "test0 ended\n";
 }
 void test0DimVect(){
 	std::cout << "Testing if error message appears correctly\n";
 	Vector v(0);
-	assert(Vector::getTotal() == 0);
 	std::cout << "Test ended\n";
 }
 void test1(){

@@ -92,7 +92,7 @@ int main(){
 void readValue(const Vector& vect, const unsigned int& n){
 	std::cout << "v: " << vect << ", v[" << n << "] = " << vect.getNthValue(n) << std::endl;
 }
-void setValue(Vector& vect, const unsigned int &n){
+void setValue(Vector& vect, const unsigned int& n){
 	bool success = true;
 	std::string input;
 	double newValue;
@@ -104,21 +104,23 @@ void setValue(Vector& vect, const unsigned int &n){
 	vect.setNthValue(n, newValue);
 	std::cout << "Vector updated to " << vect << std::endl;
 }
-void loadVector(Vector &vect){
-	std::cout << "Enter new vector: ";
-	std::cin >> vect;
+void loadVector(Vector& vect){
+	do{
+		std::cout << "Enter new vector: ";
+		std::cin >> vect;
+	} while(vect.getInputFail());
 	std::cout << "Vector updated to " << vect << std::endl;
 }
-void addVectors(Vector &v1, Vector &v2, Vector &result){
+void addVectors(Vector& v1, Vector& v2, Vector& result){
 	std::cout << v1 << " + " << v2 << " = " << v1 + v2 << std::endl;
 	result = v1 + v2;
 }
-void subtractVectors(Vector &v1, Vector &v2, Vector &result){
+void subtractVectors(Vector& v1, Vector& v2, Vector& result){
 	bool success = true;
 	std::string input;
 	unsigned int option = 0;	
 	do{
-		std::cout << "[1] => v1 - v2\n[2] => v2 - v1:";
+		std::cout << "[1] => v1 - v2\n[2] => v2 - v1: ";
 		std::getline(std::cin, input);
 		success = getUnsignedInt(&option, 1, input);
 		if(option > 2 || !option)
@@ -133,10 +135,10 @@ void subtractVectors(Vector &v1, Vector &v2, Vector &result){
 		result = v2 - v1;
 	}
 }
-void dotProduct(const Vector& v1, const Vector &v2){
+void dotProduct(const Vector& v1, const Vector& v2){
 	std::cout << v1 << " * " << v2 << " = " << v1 * v2 << std::endl;
 }
-void compareVectors(const Vector& v1, const Vector &v2){
+void compareVectors(const Vector& v1, const Vector& v2){
 	if(v1 == v2)
 		std::cout << "Vectors are equa\n";
 	else
@@ -146,7 +148,7 @@ void printVector(const Vector& vect){
 	std::cout << vect << std::endl;
 }
 void cantGetError(){
-	std::cout << "An error occurred while reading data. Try again.\n";
+	std::cout << "An error occurred while reading data. Try again: ";
 }
 bool getUnsignedInt(unsigned int* data, const unsigned int& howMany, const std::string& input){
 	std::stringstream inputStream(input);

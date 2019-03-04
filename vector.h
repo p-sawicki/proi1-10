@@ -5,30 +5,30 @@
 #include <string>
 class Vector{
 	private:
-		static unsigned int total;
 		const unsigned int DIMENSION;
 		double * data;
+		bool inputFail;
 	public:
-		Vector(const unsigned int &d);
+		Vector(const unsigned int& d);
 		void outOfBoundsError() const; 
-		double getNthValue(const unsigned int &n) const;
-		void setNthValue(const unsigned int &n, const double &newValue);
+		double getNthValue(const unsigned int& n) const;
+		void setNthValue(const unsigned int& n, const double& newValue);
 		unsigned int getDimension() const;
-		bool isSameDimension(const Vector &second) const;
+		bool isSameDimension(const Vector& second) const;
 		void incompatibleError() const;
-		static int getTotal();
+		bool getInputFail() const;
 		Vector& operator=(const Vector& second);
 		Vector operator+(const Vector& second) const;
 		Vector& operator+=(const Vector& second);
 		Vector operator-() const;
-		Vector operator-(const Vector &second) const;
-		Vector& operator-=(const Vector &second);
-		double operator*(const Vector &second) const;
-		bool operator==(const Vector &second) const;
-		bool operator!=(const Vector &second) const;
-		friend std::ostream& operator<<(std::ostream &os, const Vector &vect);	
+		Vector operator-(const Vector& second) const;
+		Vector& operator-=(const Vector& second);
+		double operator*(const Vector& second) const;
+		bool operator==(const Vector& second) const;
+		bool operator!=(const Vector& second) const;
+		friend std::ostream& operator<<(std::ostream& os, const Vector& vect);	
 		void incorrectlyFormatedError();
-		friend std::istream& operator>>(std::istream &is, Vector &vect);
+		friend std::istream& operator>>(std::istream& is, Vector& vect);
 		~Vector();
 };
 #endif
