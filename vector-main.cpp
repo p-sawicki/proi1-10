@@ -1,12 +1,15 @@
 #include "vector-main.h"
 #include "vector-test.h"
 int main(){
-	//test0();
-	//test0DimVect();
-	//test1();
-	//test2();
-	//test3();
-	//test4();
+//#define DEBUG
+#ifdef DEBUG
+	test0();
+	test0DimVect();
+	test1();
+	test2();
+	test3();
+	test4();
+#endif
 	std::string input;
 	bool success = true;
 	unsigned int dimensions[2];
@@ -109,17 +112,14 @@ void setValue(Vector& vect, const unsigned int& n){
 			cantGetError();
 	} while(!success);
 	vect.setNthValue(n, newValue);
-	std::cout << "Vector updated to " << vect << std::endl;
 }
 void loadVector(Vector& vect){
+	std::cout << "Enter new vector: ";
 	do{
-		std::cout << "Enter new vector: ";
 		std::cin >> vect;
 	} while(vect.getInputFail());
-	std::cout << "Vector updated to " << vect << std::endl;
 }
 void addVectors(Vector& v1, Vector& v2, Vector& result){
-	std::cout << v1 << " + " << v2 << " = " << v1 + v2 << std::endl;
 	result = v1 + v2;
 }
 void addVectors2(Vector& v1, Vector& v2){
@@ -146,14 +146,7 @@ void subtractVectors(Vector& v1, Vector& v2, Vector& result){
 		if(!success || option > 2 || !option)
 			success = cantGetError();
 	} while(!success);
-	if(option == 1){
-		std::cout << v1 << " - " << v2 << " = " << v1 - v2 << std::endl;
-		result = v1 - v2;
-	}
-	else{
-		std::cout << v2 << " - " << v1 << " = " << v2 - v1 << std::endl;
-		result = v2 - v1;
-	}
+	option == 1 ? result = v1 - v2 : result = v2 - v1;
 }
 void subtractVectors2(Vector& v1, Vector& v2){
 	std::cout << "[1] => v1 -= v2\n[2] => v2 -= v1: ";
