@@ -122,43 +122,31 @@ void loadVector(Vector& vect){
 void addVectors(Vector& v1, Vector& v2, Vector& result){
 	result = v1 + v2;
 }
-void addVectors2(Vector& v1, Vector& v2){
-	std::cout << "[1] => v1 += v2\n[2] => v2 += v1: ";
-	bool success = true;
-	std::string input;
+unsigned int getOneOrTwo(){
 	unsigned int option = 0;
+	std::string input;
+	bool success = true;
 	do{
 		std::getline(std::cin, input);
 		success = getUnsignedInt(&option, 1, input);
 		if(!success || !option || option > 2)
 			success = cantGetError();
 	} while(!success);
+	return option;
+}
+void addVectors2(Vector& v1, Vector& v2){
+	std::cout << "[1] => v1 += v2\n[2] => v2 += v1: ";
+	unsigned int option = getOneOrTwo();
 	option == 1 ? v1 += v2 : v2 += v1;
 }
 void subtractVectors(Vector& v1, Vector& v2, Vector& result){
-	bool success = true;
-	std::string input;
-	unsigned int option = 0;	
 	std::cout << "[1] => v1 - v2\n[2] => v2 - v1: ";
-	do{
-		std::getline(std::cin, input);
-		success = getUnsignedInt(&option, 1, input);
-		if(!success || option > 2 || !option)
-			success = cantGetError();
-	} while(!success);
+	unsigned int option = getOneOrTwo();
 	option == 1 ? result = v1 - v2 : result = v2 - v1;
 }
 void subtractVectors2(Vector& v1, Vector& v2){
 	std::cout << "[1] => v1 -= v2\n[2] => v2 -= v1: ";
-	bool success = true;
-	std::string input;
-	unsigned int option = 0;
-	do{
-		std::getline(std::cin, input);
-		success = getUnsignedInt(&option, 1, input);
-		if(!success || !option || option > 2)
-			success = cantGetError();
-	} while(!success);
+	unsigned int option = getOneOrTwo();
 	option == 1 ? v1 -= v2 : v2 -= v1;
 }
 void dotProduct(const Vector& v1, const Vector& v2){
