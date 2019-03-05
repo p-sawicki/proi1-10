@@ -17,7 +17,7 @@ int main(){
 	do{
 		std::getline(std::cin, input);
 		success = getUnsignedInt(dimensions, 2, input);
-		if(!success || dimensions[0] == 0 || dimensions[1] == 0)
+		if(!success || !dimensions[0] || !dimensions[1])
 			success = cantGetError();
 	} while(!success);
 	Vector v1(dimensions[0]), v2(dimensions[1]);
