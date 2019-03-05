@@ -54,24 +54,25 @@ void test2(){
 }
 void test3(){
 	std::cout << "test3\n";
-	const unsigned int D = 3;
-	Vector v1(D), v2(D), v3(D);
-	for(unsigned int i = 0; i < D; ++i){
-		v1.setNthValue(i, i + 1);
-		v2.setNthValue(i, i * 2);
+	Vector v1(3), v2(3), v3(3), v4(3);
+	for(unsigned int i = 0; i < 3; ++i){
+		v1.setNthValue(i, i);
+		v4.setNthValue(i, 2 * i);
 	}
-	v3 += v1;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v3.getNthValue(i) == v1.getNthValue(i));
-	v3 = v1 + v2;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v3.getNthValue(i) == v1.getNthValue(i) + v2.getNthValue(i));
-	v3 -= v1;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v3.getNthValue(i) == v2.getNthValue(i));
-	v3 = v2 - v1;
-	for(unsigned int i = 0; i < D; ++i)
-		assert(v3.getNthValue(i) == v2.getNthValue(i) - v1.getNthValue(i));
+	v4 += v1 += v1;
+	for(unsigned int i = 0; i < 3; ++i)
+		assert(v4.getNthValue(i) == 2 * v1.getNthValue(i));
+	v4 = v1 + v1 + v1;
+	for(unsigned int i = 0; i < 3; ++i)
+		assert(v4.getNthValue(i) == 3 * v1.getNthValue(i));
+	v4 -= v1 -= v1;
+	for(unsigned int i = 0; i < 3; ++i){
+		assert(v1.getNthValue(i) == 0);
+		v1.setNthValue(i, i);
+	}
+	v4 = v1 - v1 - v1;
+	for(unsigned int i = 0; i < 3; ++i)
+		assert(v4.getNthValue(i) == -v1.getNthValue(i));
 	std::cout << "test3 ended\n";
 }
 void test4(){

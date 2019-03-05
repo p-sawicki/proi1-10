@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-I -Wall
+CFLAGS=-I -Wall 
 DEPS1 = vector.h
 DEPS2 = vector-main.h
 DEPS3 = vector-test.h

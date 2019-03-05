@@ -5,10 +5,8 @@ Vector::Vector(const unsigned int& d) : DIMENSION(d), inputFail(false) {
 		for(unsigned int i = 0; i < DIMENSION; ++i)
 			data[i] = 0.0;
 	}
-	else{
+	else
 		std::cout << "Vector dimension must be positive.\n";
-		this->~Vector();
-	}
 }
 void Vector::outOfBoundsError() const {
 	std::cout << "Number must be between 0 and " << DIMENSION - 1 << std::endl;
@@ -108,11 +106,10 @@ void Vector::incorrectlyFormatedError(){
 	for(int i = 0; i < DIMENSION; ++i){
 		std::cout << letter++;
 		if(i == DIMENSION - 1)
-			std::cout << "]";
+			std::cout << "]: ";
 		else
 			std::cout << ", ";
 	}
-	std::cout << std::endl;
 }
 std::istream& operator>>(std::istream& is, Vector& vect){
 	std::string input;
@@ -143,5 +140,6 @@ std::istream& operator>>(std::istream& is, Vector& vect){
 	return is;
 }
 Vector::~Vector(){
-	delete[] data;
+	if(data)
+		delete[] data;
 }
