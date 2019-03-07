@@ -1,3 +1,4 @@
+//Author: Piotr Sawicki
 #include "vector-test.h"
 void test0(){
 	std::cout << "Test0\n";

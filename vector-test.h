@@ -1,3 +1,4 @@
+//Author: Piotr Sawicki
 #ifndef VECTOR_TEST_H
 #define VECTOR_TEST_H
 #include <iostream>

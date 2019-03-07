@@ -1,3 +1,4 @@
+//Author: Piotr Sawicki
 #include "vector.h"
 Vector::Vector(const unsigned int& d) : DIMENSION(d), inputFail(false) {
 	if(DIMENSION){

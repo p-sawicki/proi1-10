@@ -1,3 +1,4 @@
+//Author: Piotr Sawicki
 #include "vector-main.h"
 #include "vector-test.h"
 int main(){
