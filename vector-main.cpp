@@ -45,12 +45,7 @@ int main(){
 		unsigned int whichVect = 0;
 		if(decision == 1 || decision == 2 || decision == 3 || decision == 8){
 			std::cout << "Which vector? [1 OR 2]: ";
-			do{
-				std::getline(std::cin, input);
-				success = getUnsignedInt(&whichVect, 1, input);
-				if(!success || whichVect > 2 || !whichVect)
-					success = cantGetError();
-			} while(!success);
+			whichVect = getOneOrTwo();
 		}
 		Vector *vChosen = NULL;
 		whichVect == 1 ? vChosen = &v1 : vChosen = &v2;
@@ -67,12 +62,7 @@ int main(){
 		unsigned int whichToUpdate = 0;
 		if(decision == 4 || decision == 5){
 			std::cout << "In which vector to store the result? [1 OR 2]: ";
-			do{
-				std::getline(std::cin, input);
-				success = getUnsignedInt(&whichToUpdate, 1, input);
-				if(!success || whichToUpdate > 2 || !whichToUpdate)
-					success = cantGetError();
-			} while(!success);
+			whichToUpdate = getOneOrTwo();
 		}
 		Vector *resultHere = NULL;
 		whichToUpdate == 1 ? resultHere = &v1 : resultHere = &v2;
